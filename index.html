@@ -74,11 +74,48 @@
       <p>Can you please forgive me?</p>
     </div>
   </div>
-    <audio id="meowSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8d6b4f2f.mp3?filename=cat-meow-14536.mp3"></audio>
+    <!-- Web Audio meow (no external file, works on tap) -->
 
     <script>
       const cat = document.querySelector('.cat');
-      const audio = document.getElementById('meowSound');
+      const container = document.querySelector('.container');
+
+      function playMeow() {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.25);
+
+        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+      }
+
+      cat.addEventListener('click', () => {
+        playMeow();
+
+        const heart = document.createElement('div');
+        heart.textContent = '💗';
+        heart.style.position = 'fixed';
+        heart.style.left = '50%';
+        heart.style.top = '55%';
+        heart.style.transform = 'translate(-50%, -50%)';
+        heart.style.fontSize = '3rem';
+        heart.style.animation = 'pop 1.2s ease forwards';
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1200);
+      });
       const container = document.querySelector('.container');
 
       cat.addEventListener('click', () => {
