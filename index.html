@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Sorry 😿</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fcefee, #fde2e4);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container {
+      text-align: center;
+    }
+    .cat {
+      width: 260px;
+      margin: 0 auto 20px;
+    }
+    .text {
+      font-size: 1.4rem;
+      color: #444;
+    }
+    .text strong {
+      color: #e63946;
+    }
+    .tear {
+      animation: drop 2s infinite;
+      transform-origin: top;
+    }
+    @keyframes drop {
+      0% { transform: translateY(0); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: translateY(25px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Cute sad cat SVG -->
+    <svg class="cat" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Head -->
+      <circle cx="100" cy="110" r="70" fill="#ffd6a5" />
+
+      <!-- Ears -->
+      <polygon points="45,60 20,20 70,40" fill="#ffd6a5" />
+      <polygon points="155,60 180,20 130,40" fill="#ffd6a5" />
+
+      <!-- Eyes -->
+      <ellipse cx="75" cy="105" rx="18" ry="22" fill="#ffffff" />
+      <ellipse cx="125" cy="105" rx="18" ry="22" fill="#ffffff" />
+      <circle cx="75" cy="112" r="8" fill="#333" />
+      <circle cx="125" cy="112" r="8" fill="#333" />
+
+      <!-- Tears -->
+      <ellipse class="tear" cx="75" cy="135" rx="4" ry="8" fill="#74c0fc" />
+      <ellipse class="tear" cx="125" cy="135" rx="4" ry="8" fill="#74c0fc" style="animation-delay:1s" />
+
+      <!-- Nose -->
+      <polygon points="100,120 92,130 108,130" fill="#e63946" />
+
+      <!-- Mouth -->
+      <path d="M90 135 Q100 140 110 135" stroke="#333" stroke-width="2" fill="none" />
+    </svg>
+
+    <div class="text">
+      <p><strong>meow…</strong></p>
+      <p>I'm really sorry.</p>
+      <p>Can you please forgive me?</p>
+    </div>
+  </div>
+    <audio id="meowSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8d6b4f2f.mp3?filename=cat-meow-14536.mp3"></audio>
+
+    <script>
+      const cat = document.querySelector('.cat');
+      const audio = document.getElementById('meowSound');
+      const container = document.querySelector('.container');
+
+      cat.addEventListener('click', () => {
+        audio.currentTime = 0;
+        audio.play();
+
+        const heart = document.createElement('div');
+        heart.textContent = '💗';
+        heart.style.position = 'fixed';
+        heart.style.left = '50%';
+        heart.style.top = '55%';
+        heart.style.transform = 'translate(-50%, -50%)';
+        heart.style.fontSize = '3rem';
+        heart.style.animation = 'pop 1.2s ease forwards';
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1200);
+      });
+    </script>
+
+    <style>
+      @keyframes pop {
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        100% { opacity: 0; transform: translate(-50%, -80%) scale(1.6); }
+      }
+    </style>
+  </div>
+</body>
+</html>
